@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Event Registration Form</title>
+    <style>
+        body{
+            margin:0;
+            font-family:Arial, sans-serif;
+            background:#f2f2f2;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            min-height:100vh;
+        }
+        .container{
+            width:400px;
+            background:white;
+            padding:25px;
+            border-radius:10px;
+            box-shadow:0 0 10px rgba(0,0,0,0.2);
+        }
+        h2{
+            text-align:center;
+        }
+        input, select{
+            width:100%;
+            padding:10px;
+            margin-top:8px;
+            box-sizing:border-box;
+        }
+        button{
+            width:100%;
+            padding:10px;
+            margin-top:15px;
+            background:green;
+            color:white;
+            border:none;
+            cursor:pointer;
+            font-size:16px;
+            border-radius:5px;
+        }
+        button:hover{
+            background:darkgreen;
+        }
+        .error{
+            color:red;
+            font-size:13px;
+            margin-top:3px;
+        }
+        #result{
+            margin-top:20px;
+            padding:15px;
+            border:2px solid green;
+            border-radius:8px;
+            background:#e8f5e9;
+            color:black;
+            display:none;
+        }
+        #result h3{
+            text-align:center;
+            color:green;
+            margin-top:0;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+<h2>Event Registration Form</h2>
+
+<input type="text" id="name" placeholder="Enter Name">
+<div id="nameError" class="error"></div>
+
+<input type="email" id="email" placeholder="Enter Email">
+<div id="emailError" class="error"></div>
+
+<input type="tel" id="phone" placeholder="Enter Phone Number">
+<div id="phoneError" class="error"></div>
+
+<select id="event">
+    <option value="">-- Select Event --</option>
+    <option>Hackathon</option>
+    <option>Ethical Hacking</option>
+    <option>Dance</option>
+    <option>Singing</option>
+    <option>Painting</option>
+    <option>Photography</option>
+    <option>ShortFilm</option>
+</select>
+<div id="eventError" class="error"></div>
+<input type="date" id="date">
+<div id="dateError" class="error"></div>
+<button onclick="register()">Register</button>
+<div id="result"></div>
+</div>
+<script>
+function register(){
+    let name = document.getElementById("name").value.trim();
+    let email = document.getElementById("email").value.trim();
+    let phone = document.getElementById("phone").value.trim();
+    let event = document.getElementById("event").value;
+    let date = document.getElementById("date").value;
+
+    document.getElementById("nameError").innerHTML="";
+    document.getElementById("emailError").innerHTML="";
+    document.getElementById("phoneError").innerHTML="";
+    document.getElementById("eventError").innerHTML="";
+    document.getElementById("dateError").innerHTML="";
+    document.getElementById("result").style.display="none";
+    document.getElementById("result").innerHTML="";
+    let valid = true;
+    let namePattern = /^[A-Za-z ]+$/;
+    if(name==""){
+        document.getElementById("nameError").innerHTML="Name is required";
+        valid=false;
+    }else if(!namePattern.test(name)){
+        document.getElementById("nameError").innerHTML="Only alphabets are allowed";
+        valid=false;
+    }
+    let emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if(email==""){
+        document.getElementById("emailError").innerHTML="Email is required";
+        valid=false;
+    }else if(!emailPattern.test(email)){
+        document.getElementById("emailError").innerHTML="Invalid Email Address";
+        valid=false;
+    }
+    let phonePattern = /^[0-9]{10}$/;
+    if(phone==""){
+        document.getElementById("phoneError").innerHTML="Phone Number is required";
+        valid=false;
+    }else if(!phonePattern.test(phone)){
+        document.getElementById("phoneError").innerHTML="Enter a valid 10-digit phone number";
+        valid=false;
+    }
+    if(event==""){
+        document.getElementById("eventError").innerHTML="Please select an event";
+        valid=false;
+    }
+    if(date==""){
+        document.getElementById("dateError").innerHTML="Please select the registration date";
+        valid=false;
+    }
+    if(valid){
+        alert(" Registration Successful!");
+
+        document.getElementById("result").style.display="block";
+
+        document.getElementById("result").innerHTML =
+        "<h3>Registration Details</h3>" +
+        "<p><b>Name:</b> " + name + "</p>" +
+        "<p><b>Email:</b> " + email + "</p>" +
+        "<p><b>Phone:</b> " + phone + "</p>" +
+        "<p><b>Event:</b> " + event + "</p>" +
+        "<p><b>Registration Date:</b> " + date + "</p>";
+
+        document.getElementById("name").value="";
+        document.getElementById("email").value="";
+        document.getElementById("phone").value="";
+        document.getElementById("event").selectedIndex=0;
+        document.getElementById("date").value="";
+    }
+}
+</script>
+</body>
+</html>
