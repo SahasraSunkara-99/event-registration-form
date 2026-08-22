@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Registration Form</title>
+</head>
+<body>
+
+<h2>Registration Form</h2>
+
+<form id="regForm">
+
+  First Name:
+  <input type="text" id="fname"><br><br>
+
+  Last Name:
+  <input type="text" id="lname"><br><br>
+
+  Username:
+  <input type="text" id="username"><br><br>
+
+  Password:
+  <input type="password" id="pass"><br><br>
+
+  Confirm Password:
+  <input type="password" id="cpass"><br><br>
+
+  Date of Birth:
+  <input type="date" id="dob"><br><br>
+
+  Mobile:
+  <input type="text" id="mobile"><br><br>
+
+  Address:
+  <textarea id="address"></textarea><br><br>
+
+  Pincode:
+  <input type="text" id="pincode"><br><br>
+
+  Gender:
+  <input type="radio" name="gender" value="Male">Male
+  <input type="radio" name="gender" value="Female">Female
+  <br><br>
+
+  <button type="submit">Register</button>
+
+</form>
+
+<hr>
+
+<h2>Registered Details</h2>
+<div id="output"></div>
+
+<script>
+
+let registrations = [];
+
+document.getElementById("regForm").addEventListener("submit", function(e){
+
+    e.preventDefault();
+
+    let password = document.getElementById("pass").value;
+    let confirm = document.getElementById("cpass").value;
+
+    if(password != confirm){
+        alert("Passwords do not match");
+        return;
+    }
+
+    let gender = "";
+    let g = document.getElementsByName("gender");
+
+    for(let i=0; i<g.length; i++){
+        if(g[i].checked){
+            gender = g[i].value;
+        }
+    }
+
+    let user = {
+        fname: document.getElementById("fname").value,
+        lname: document.getElementById("lname").value,
+        username: document.getElementById("username").value,
+        dob: document.getElementById("dob").value,
+        mobile: document.getElementById("mobile").value,
+        address: document.getElementById("address").value,
+        pincode: document.getElementById("pincode").value,
+        gender: gender
+    };
+
+    registrations.push(user);
+
+    showDetails();
+
+    document.getElementById("regForm").reset();
+
+});
+
+function showDetails(){
+
+    let text = "";
+
+    for(let i=0; i<registrations.length; i++){
+
+        text += "<h3>Registration " + (i+1) + "</h3>";
+        text += "First Name: " + registrations[i].fname + "<br>";
+        text += "Last Name: " + registrations[i].lname + "<br>";
+        text += "Username: " + registrations[i].username + "<br>";
+        text += "DOB: " + registrations[i].dob + "<br>";
+        text += "Mobile: " + registrations[i].mobile + "<br>";
+        text += "Address: " + registrations[i].address + "<br>";
+        text += "Pincode: " + registrations[i].pincode + "<br>";
+        text += "Gender: " + registrations[i].gender + "<hr>";
+
+    }
+
+    document.getElementById("output").innerHTML = text;
+
+}
+
+</script>
+
+</body>
+</html>
